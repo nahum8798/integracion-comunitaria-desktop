@@ -33,7 +33,7 @@ public class UserController {
 
             if (role.equalsIgnoreCase("proveedor")) {
                 Provider provider = new Provider(userId);
-                ResultDataBase resultProvider = createProvider(provider);
+                ResultDataBase resultProvider = createProvider(user);
                 if (!resultProvider.getSuccess()) {
                     connection.rollback();
                     return resultProvider;
@@ -118,7 +118,7 @@ public class UserController {
     }
     
     
-    private ResultDataBase createProvider(Provider provider) {
+    private ResultDataBase createProvider(User user) {
         String query = "INSERT INTO provider (id_user, name) VALUES (?, ?)";
         
         // Usamos PreparedStatement para insertar los datos del proveedor
@@ -126,8 +126,8 @@ public class UserController {
              PreparedStatement ps = conn.prepareStatement(query)) {
     
             // Establecemos los parámetros
-            ps.setInt(1, provider.getIdUser());
-            ps.setString(2, provider.getName());
+            ps.setInt(1, user.getIdUser());
+            ps.setString(2, user.getName());
             //ps.setInt(3, provider.getIdTypeProvider());
             //ps.setInt(4, provider.getIdCategory());
             
