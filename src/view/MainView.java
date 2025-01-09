@@ -75,14 +75,14 @@ public class MainView extends JFrame {
         });
 
         // Acción para registrarse como cliente
-        btnRegisterClient.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        //btnRegisterClient.addActionListener(new ActionListener() {
+        //    @Override
+        //    public void actionPerformed(ActionEvent e) {
                 // Abre la vista de registro como cliente (puedes cambiar la clase si es diferente)
-                new RegisterClientView().setVisible(true);
-                dispose(); // Cierra la ventana actual
-            }
-        });
+        //        new RegisterClientView().setVisible(true);
+        //        dispose(); // Cierra la ventana actual
+        //    }
+        //});
 
         // Acción para iniciar sesión
         btnLogin.addActionListener(new ActionListener() {
