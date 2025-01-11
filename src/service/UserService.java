@@ -6,10 +6,12 @@ import connection.ResultDataBase;
 import model.User;
 import model.Provider;
 import model.Customer;
+import repository.AddressRepository;
 import repository.UserRepository;
 
 public class UserService {
     private UserRepository userRepository = new UserRepository();
+    private AddressRepository addressRepository = new AddressRepository();
 
     public ResultDataBase registerUser(User user, String role, String category, String profession, String typeProvider, String typeJornal,
                                        String city, String departament, String province, String street, String streetNumber) {
@@ -33,14 +35,14 @@ public class UserService {
     }
 
     public List<String> getCities() {
-        return userRepository.getCities();
+        return addressRepository.getCities();
     }
 
     public List<String> getDepartments() {
-        return userRepository.getDepartments();
+        return addressRepository.getDepartments();
     }
 
     public List<String> getProvinces() {
-        return userRepository.getProvinces();
+        return addressRepository.getProvinces();
     }
 }
