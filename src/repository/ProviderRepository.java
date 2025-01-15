@@ -115,6 +115,61 @@ public class ProviderRepository {
         return -1;
     }
 
+    public String getProviderCategory(int id_user) {
 
+        String categoryName = null;
+
+        // Consulta para obtener el id_category desde la tabla provider
+        String queryProvider = "SELECT id_category from provider WHERE id_user = ?";
+
+        // Consulta para obtener el nombre de la categoria desde la tabla category
+        String queryCategory = "SELECT name FROM category WHERE id_category = ?";
+
+        try (Connection conn = db.openConnection()) {
+            // Paso 1: Obtener el id_category desde la tabla provider
+            int id_category = -1;
+            try (PreparedStatement psProvider = conn.prepareStatement(queryProvider)) {
+                psProvider.setInt(1, id_user);
+                try (ResultSet rs = psProvider.executeQuery()) {
+                    if (rs.next()) {
+                        id_category = rs.getInt("id_category");
+                    }
+                }
+            }
+
+            // Paso 2: Si se encontró el id_Category, buscar el nombre de la categoría
+            if (id_category != -1) {
+                try (PreparedStatement psCategory = conn.prepareStatement(queryCategory)) {
+                    psCategory.setInt(1, id_category);
+                    try (ResultSet rs = psCategory.executeQuery()) {
+                        if (rs.next()) {
+                            categoryName = rs.getString("name");
+                        }
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categoryName;
+        
+    }
+
+
+    /* -- UPDATES QUERY  -- */
+    public void updateProviderCategory(int userId, int categoriId) {
+        String query = "UPDATE provider SET id_category =  ? WHERE id_user = ?";
+        try (Connection conn = db.openConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, categoriId);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
 

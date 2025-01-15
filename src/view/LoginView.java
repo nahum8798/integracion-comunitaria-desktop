@@ -59,23 +59,33 @@ public class LoginView extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
 
         // Acción para iniciar sesión
-        btnLogin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String email = txtUsername.getText();
-                String password = new String(txtPassword.getPassword());
+        // En LoginView.java
+btnLogin.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String email = txtUsername.getText();
+        String password = new String(txtPassword.getPassword());
 
-                ResultDataBase result = loginController.loginUser(email, password);
+        ResultDataBase result = loginController.loginUser(email, password);
 
-                if (result.getSuccess()) {
-                    JOptionPane.showMessageDialog(null, result.getMessage());
-                    new MainMenuView().setVisible(true); // Mostrar el menú principal
-                    dispose(); // Cerrar la ventana de login
-                } else {
-                    JOptionPane.showMessageDialog(null, result.getMessage());
-                }
-            }
-        });
+        if (result.getSuccess()) {
+            JOptionPane.showMessageDialog(null, result.getMessage());
+
+            // Obtener el ID del usuario desde el resultado de la base de datos
+            int userId = result.getUserId(); // Obtener el ID del usuario
+            
+            //System.out.println("El Id del usuario logeado es: " + userId);
+
+            // Pasar el ID del usuario al menú principal
+            //new MainMenuView(userId).setVisible(true);  // Pasamos el ID a MainMenuView
+            dispose();  // Cerrar la ventana de login
+        } else {
+            JOptionPane.showMessageDialog(null, result.getMessage());
+        }
+    }
+});
+
+
 
         // Acción para volver a la vista principal
         btnBack.addActionListener(new ActionListener() {
